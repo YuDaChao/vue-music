@@ -6,7 +6,7 @@
           <silder>
             <div v-for="item in recommends" :key="item.id">
               <a :href="item.linkUrl">
-                <img @load="loadImage" :src="item.picUrl" alt="">
+                <img class="needsclick" @load="loadImage" :src="item.picUrl" alt="">
               </a>
             </div>
           </silder>
@@ -26,6 +26,9 @@
           </ul>
         </div>
       </div>
+      <div class="loading-container" v-show="!discList.length">
+        <loading></loading>
+      </div>
     </Scroll>
   </div>
 </template>
@@ -33,6 +36,7 @@
 <script>
   import Silder from '../../base/slider/slider'
   import Scroll from '../../base/scroll/scroll'
+  import Loading from '../../base/loading/loading'
   import { getRecommend, getDiscList } from '../../api/recommend'
   import { ERR_OK } from '../../api/config'
   export default {
@@ -69,7 +73,8 @@
     },
     components: {
       Silder,
-      Scroll
+      Scroll,
+      Loading
     }
   }
 </script>

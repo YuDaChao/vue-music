@@ -83,6 +83,7 @@
           scrollX: true,
           scrollY: false,
           momentum: false, // 惯性
+          click: true,
           snap: {
             loop: this.loop,
             threshold: 0.3
