@@ -1,6 +1,7 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
+import VueLazyLoad from 'vue-lazyload'
 import fastclick from 'fastclick'
 
 import './common/stylus/index.styl'
@@ -91,6 +92,10 @@ Vue.use(Swipe)
 Vue.use(Sticky)
 Vue.use(ScrollNav)
 Vue.use(ScrollNavBar)
+
+Vue.use(VueLazyLoad, {
+  loading: require('./common/image/default.png')
+})
 
 Vue.config.productionTip = false
 
