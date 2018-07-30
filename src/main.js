@@ -4,6 +4,8 @@ import Vue from 'vue'
 import VueLazyLoad from 'vue-lazyload'
 import fastclick from 'fastclick'
 
+import './mock/mockServer'
+
 import './common/stylus/index.styl'
 
 // By default we import all the components.
