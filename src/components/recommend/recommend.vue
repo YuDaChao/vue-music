@@ -108,7 +108,7 @@
           .icon
             flex: 0 0 60px
             width: 60px
-            padding-right: 20px
+            margin-right: 20px
           .text
             display: flex
             flex-direction: column
