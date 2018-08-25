@@ -1,45 +1,53 @@
 <template>
-  <scroll
-    ref="listview"
-    class="singer"
-    :data="singers"
-    :listenScroll="listenScroll"
-    :probeType="probeType"
-    @scroll="scroll">
-    <ul>
-      <li v-for="(group, index) in singers" class="list-group" ref="listGroup" :key="index">
-        <h2 class="list-group-title">{{group.title}}</h2>
-        <ul>
-          <li v-for="item in group.items" class="list-group-item" :key="item.id">
-            <img class="avatar" v-lazy="item.avatar" alt="">
-            <span class="name">{{item.name}}</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <ul class="nav-list">
-      <li
-        v-for="(item, index) in navList"
-        :key="item"
-        class="nav-item"
-        :class="{active: index ===currentIndex}"
-        :data-index="index"
-        @touchstart="onShortcutTouchstart"
-        @touchmove.stop.prevent="onShortcutTouchmove"
-      >
-        {{item}}
-      </li>
-    </ul>
-    <div class="list-fixed" v-show="fixedTitle" ref="fixed">
-      <h2 class="list-group-title">{{fixedTitle}}</h2>
-    </div>
-    <div class="loading-container" v-show="!singers.length">
-      <loading></loading>
-    </div>
-  </scroll>
+  <div>
+    <scroll
+      ref="listview"
+      class="singer"
+      :data="singers"
+      :listenScroll="listenScroll"
+      :probeType="probeType"
+      @scroll="scroll">
+      <ul>
+        <li v-for="(group, index) in singers" class="list-group" ref="listGroup" :key="index">
+          <h2 class="list-group-title">{{group.title}}</h2>
+          <ul>
+            <li
+              v-for="item in group.items"
+              class="list-group-item"
+              @click="handleClickSinger(item)"
+              :key="item.id">
+              <img class="avatar" v-lazy="item.avatar" alt="">
+              <span class="name">{{item.name}}</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav-list">
+        <li
+          v-for="(item, index) in navList"
+          :key="item"
+          class="nav-item"
+          :class="{active: index ===currentIndex}"
+          :data-index="index"
+          @touchstart="onShortcutTouchstart"
+          @touchmove.stop.prevent="onShortcutTouchmove"
+        >
+          {{item}}
+        </li>
+      </ul>
+      <div class="list-fixed" v-show="fixedTitle" ref="fixed">
+        <h2 class="list-group-title">{{fixedTitle}}</h2>
+      </div>
+      <div class="loading-container" v-show="!singers.length">
+        <loading></loading>
+      </div>
+    </scroll>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   import { getSingerList } from '../../api/singer'
   import Singer from '../../common/js/singer'
   import Scroll from '../../base/scroll/scroll'
@@ -69,6 +77,13 @@
       this._getSingerList()
     },
     methods: {
+      ...mapMutations({
+        setSinger: 'SET_SINGER'
+      }),
+      handleClickSinger (item) {
+        this.$router.push(`/singer/${item.id}`)
+        this.setSinger(item)
+      },
       async _getSingerList () {
         const resp = await getSingerList()
         if (resp.code === ERR_OK) {

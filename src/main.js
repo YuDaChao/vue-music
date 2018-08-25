@@ -4,6 +4,8 @@ import Vue from 'vue'
 import VueLazyLoad from 'vue-lazyload'
 import fastclick from 'fastclick'
 
+import store from './store'
+
 import './mock/mockServer'
 
 import './common/stylus/index.styl'
@@ -107,6 +109,7 @@ fastclick.attach(document.body)
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })
